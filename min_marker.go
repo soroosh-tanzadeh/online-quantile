@@ -7,5 +7,6 @@ type MinMarker struct {
 func (m *MinMarker) UpdatePosition(v float64) {
 	if v < m.q {
 		m.q = v
+		m.n++
 	}
 }

@@ -1,10 +1,11 @@
 package onlinequantile
 
 type Marker interface {
-	UpdatePosition(float64)
+	IncrementPosition()
+	IncrementDesiredPosition()
 	UpdateQuantile()
 	GetValue() float64
-
+	SetValue(x float64)
 	getN() int
 }
 
@@ -23,6 +24,10 @@ func (m *BaseMarker) getN() int {
 	return m.n
 }
 
+func (m *BaseMarker) SetValue(x float64) {
+	m.q = x
+}
+
 func (m *BaseMarker) updateDesiredPosition() {
 	m.nPrime += m.dPrime
 }
@@ -31,6 +36,10 @@ func (m *BaseMarker) UpdateQuantile() {
 	// Nothing
 }
 
-func (m *BaseMarker) UpdatePosition(float64) {
-	// Nothing
+func (m *BaseMarker) IncrementPosition() {
+	m.n++
+}
+
+func (m *BaseMarker) IncrementDesiredPosition() {
+	m.nPrime = m.nPrime + m.dPrime
 }

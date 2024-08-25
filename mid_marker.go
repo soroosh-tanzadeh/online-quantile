@@ -23,6 +23,7 @@ func (m *MidMarker) UpdateQuantile() {
 	offsetFromDesired := m.nPrime - float64(m.n)
 	offsetFromRNeighbor := m.rNeighbor.getN() - m.n
 	offsetFromLNeighbor := m.lNeighbor.getN() - m.n
+
 	displacemment := 1
 	if offsetFromDesired < 0.0 {
 		displacemment = -1
@@ -48,9 +49,8 @@ func (m *MidMarker) pSquared(displacement int) float64 {
 	qDifRNeighbor := m.rNeighbor.GetValue() - m.q
 	qDifLNeighbor := m.q - m.lNeighbor.GetValue()
 
-	return m.q + float64(displacement)/float64(neighborSpan) +
-		((float64(lNeighborOffset) + float64(displacement)) * qDifRNeighbor / float64(rNeighborOffset)) +
-		((float64(rNeighborOffset) - float64(displacement)) * qDifLNeighbor / float64(lNeighborOffset))
+	return (m.q + float64(displacement)/float64(neighborSpan)) * ((float64(lNeighborOffset+displacement) * (qDifRNeighbor / float64(rNeighborOffset))) +
+		(float64(rNeighborOffset-displacement) * (qDifLNeighbor / float64(lNeighborOffset))))
 }
 
 func (m *MidMarker) linear(displacement int) float64 {
