@@ -9,12 +9,12 @@ import (
 )
 
 func TestShouldCalculateQuantilesAsExpected(t *testing.T) {
-	inputs1 := []float64{0.02, 0.5, 0.74, 3.39, 0.83, 22.37, 10.15, 15.43, 38.62, 15.92, 34.60, 10.28, 1.47, 0.40, 0.05, 1.39, 0.27, 0.42, 0.09, 11.37}
+	series := []float64{0.02, 0.5, 0.74, 3.39, 0.83, 22.37, 10.15, 15.43, 38.62, 15.92, 34.60, 10.28, 1.47, 0.40, 0.05, 1.39, 0.27, 0.42, 0.09, 11.37}
 	q50 := NewQuantile(0.5)
 
-	q50.Update(inputs1[:5])
+	q50.Update(series[:5])
 
-	for _, x := range inputs1[5:] {
+	for _, x := range series[5:] {
 		q50.Consume(x)
 		fmt.Printf("%f %d %d %d %d %d \n", q50.GetQuantileValue(), q50.m[0].getN(), q50.m[1].getN(), q50.m[2].getN(), q50.m[3].getN(), q50.m[4].getN())
 	}
