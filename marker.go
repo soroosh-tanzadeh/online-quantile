@@ -6,12 +6,12 @@ type Marker interface {
 	UpdateQuantile()
 	GetValue() float64
 	SetValue(x float64)
-	getN() int
+	getN() int64
 }
 
 type BaseMarker struct {
 	q      float64
-	n      int
+	n      int64
 	nPrime float64
 	dPrime float64
 }
@@ -20,7 +20,7 @@ func (m *BaseMarker) GetValue() float64 {
 	return m.q
 }
 
-func (m *BaseMarker) getN() int {
+func (m *BaseMarker) getN() int64 {
 	return m.n
 }
 
