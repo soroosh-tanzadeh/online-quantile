@@ -24,7 +24,7 @@ func (m *MidMarker) UpdateQuantile() {
 	offsetFromRNeighbor := m.rNeighbor.getN() - m.n
 	offsetFromLNeighbor := m.lNeighbor.getN() - m.n
 
-	displacemment := 1
+	var displacemment int64 = 1
 	if offsetFromDesired < 0.0 {
 		displacemment = -1
 	}
@@ -41,7 +41,7 @@ func (m *MidMarker) UpdateQuantile() {
 
 }
 
-func (m *MidMarker) pSquared(displacement int) float64 {
+func (m *MidMarker) pSquared(displacement int64) float64 {
 	neighborSpan := m.rNeighbor.getN() - m.lNeighbor.getN()
 	lNeighborOffset := m.n - m.lNeighbor.getN()
 	rNeighborOffset := m.rNeighbor.getN() - m.n
@@ -53,7 +53,7 @@ func (m *MidMarker) pSquared(displacement int) float64 {
 		(float64(rNeighborOffset-displacement) * (qDifLNeighbor / float64(lNeighborOffset))))
 }
 
-func (m *MidMarker) linear(displacement int) float64 {
+func (m *MidMarker) linear(displacement int64) float64 {
 	neighborQ := 0.0
 	if displacement < 0 {
 		neighborQ = m.lNeighbor.GetValue()
@@ -61,7 +61,7 @@ func (m *MidMarker) linear(displacement int) float64 {
 		neighborQ = m.rNeighbor.GetValue()
 	}
 
-	neighborOffset := 0
+	var neighborOffset int64 = 0
 	if displacement < 0 {
 		neighborOffset = m.lNeighbor.getN()
 	} else {
